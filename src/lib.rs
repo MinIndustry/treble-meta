@@ -1,2 +1,2 @@
 mod parameters;
-pub use parameters::Parameter;
+pub use parameters::{Literal, Parameter};
