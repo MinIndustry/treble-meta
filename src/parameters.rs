@@ -47,6 +47,15 @@ impl ToTokens for Literal {
     }
 }
 
+/// Determines the size of a List parameter.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum ListSize<S> {
+    /// Size is determined by the value of another field on the struct.
+    Field(S),
+    /// Size is a fixed constant.
+    Constant(usize),
+}
+
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub enum Parameter<S> {
     Toggle {
@@ -80,9 +89,26 @@ pub enum Parameter<S> {
     List {
         title: S,
         field_name: S,
-        size: S, // Name of the field which contains the size of the vec
+        size: ListSize<S>,
         ltype: Literal,
     },
+}
+
+impl<T: quote::ToTokens> ToTokens for ListSize<T> {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match self {
+            ListSize::Field(name) => {
+                tokens.extend(quote! {
+                    rustic_meta::ListSize::Field(#name)
+                });
+            }
+            ListSize::Constant(n) => {
+                tokens.extend(quote! {
+                    rustic_meta::ListSize::Constant(#n)
+                });
+            }
+        }
+    }
 }
 
 impl<T: quote::ToTokens> ToTokens for Parameter<T> {
