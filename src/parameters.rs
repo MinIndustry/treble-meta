@@ -94,7 +94,7 @@ pub enum Parameter<S> {
     },
 }
 
-impl<T: quote::ToTokens> ToTokens for ListSize<T> {
+impl<T: ToTokens> ToTokens for ListSize<T> {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match self {
             ListSize::Field(name) => {
@@ -111,7 +111,7 @@ impl<T: quote::ToTokens> ToTokens for ListSize<T> {
     }
 }
 
-impl<T: quote::ToTokens> ToTokens for Parameter<T> {
+impl<T: ToTokens> ToTokens for Parameter<T> {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match self {
             Parameter::Toggle {
