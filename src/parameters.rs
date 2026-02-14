@@ -4,6 +4,7 @@ use quote::quote;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS))]
 /// Represents a literal value that defines a List parameter's type.
 pub enum Literal {
     Toggle(String, bool),
@@ -49,6 +50,7 @@ impl ToTokens for Literal {
 
 /// Determines the size of a List parameter.
 #[derive(Clone, Debug, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS))]
 pub enum ListSize<S> {
     /// Size is determined by the value of another field on the struct.
     Field(S),
@@ -57,6 +59,7 @@ pub enum ListSize<S> {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
+#[cfg_attr(feature = "ts", derive(ts_rs::TS))]
 pub enum Parameter<S> {
     Toggle {
         title: S,
