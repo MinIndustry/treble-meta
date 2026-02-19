@@ -1,15 +1,8 @@
 mod parameters;
-pub use parameters::{ListSize, Literal, Parameter};
+mod filter;
 
-/// Static metadata describing a filter type.
-#[derive(Clone, Debug, Serialize, Deserialize)]
-#[cfg_attr(feature = "ts", derive(ts_rs::TS))]
-pub struct FilterInfo {
-    pub name: &'static str,
-    pub description: &'static str,
-    pub source_amount: usize,
-    pub parameters: Vec<Parameter<&'static str>>,
-}
+pub use parameters::{ListSize, Literal, Parameter};
+pub use filter::{FilterInfo, FilterInput};
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "ts", derive(ts_rs::TS))]
