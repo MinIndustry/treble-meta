@@ -15,6 +15,7 @@ pub struct FilterInput {
 #[cfg_attr(feature = "ts", derive(ts_rs::TS))]
 pub struct FilterInfo {
     pub name: &'static str,
+    pub type_id: &'static str,
     pub description: &'static str,
     /// All input ports in port-index orde: audio inputs first, then parameter ports
     pub inputs: Vec<FilterInput>,
