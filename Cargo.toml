@@ -1,6 +1,6 @@
 [package]
-name = "rustic-meta"
-description = "Metadata structures for Rustic"
+name = "treble-meta"
+description = "Metadata structures for Treble"
 version = "0.1.0"
 edition = "2024"
 

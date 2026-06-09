@@ -18,17 +18,17 @@ impl ToTokens for Literal {
         match self {
             Literal::Toggle(title, default) => {
                 tokens.extend(quote! {
-                    rustic_meta::Literal::Toggle(String::from(#title), #default)
+                    treble_meta::Literal::Toggle(String::from(#title), #default)
                 });
             }
             Literal::Range(title, min, max, default) => {
                 tokens.extend(quote! {
-                    rustic_meta::Literal::Range(String::from(#title), #min, #max, #default)
+                    treble_meta::Literal::Range(String::from(#title), #min, #max, #default)
                 });
             }
             Literal::Float(title, default) => {
                 tokens.extend(quote! {
-                    rustic_meta::Literal::Float(String::from(#title), #default)
+                    treble_meta::Literal::Float(String::from(#title), #default)
                 });
             }
             Literal::Int(title, default, min, max) => {
@@ -41,7 +41,7 @@ impl ToTokens for Literal {
                     None => quote! { None },
                 };
                 tokens.extend(quote! {
-                    rustic_meta::Literal::Int(String::from(#title), #default, #min_tokens, #max_tokens)
+                    treble_meta::Literal::Int(String::from(#title), #default, #min_tokens, #max_tokens)
                 });
             }
         }
@@ -102,12 +102,12 @@ impl<T: ToTokens> ToTokens for ListSize<T> {
         match self {
             ListSize::Field(name) => {
                 tokens.extend(quote! {
-                    rustic_meta::ListSize::Field(#name)
+                    treble_meta::ListSize::Field(#name)
                 });
             }
             ListSize::Constant(n) => {
                 tokens.extend(quote! {
-                    rustic_meta::ListSize::Constant(#n)
+                    treble_meta::ListSize::Constant(#n)
                 });
             }
         }
@@ -124,7 +124,7 @@ impl<T: ToTokens> ToTokens for Parameter<T> {
                 value,
             } => {
                 tokens.extend(quote! {
-                    rustic_meta::Parameter::Toggle{
+                    treble_meta::Parameter::Toggle{
                         title: #title,
                         field_name: #field_name,
                         default: #default,
@@ -141,7 +141,7 @@ impl<T: ToTokens> ToTokens for Parameter<T> {
                 value,
             } => {
                 tokens.extend(quote! {
-                    rustic_meta::Parameter::Range {
+                    treble_meta::Parameter::Range {
                         title: #title,
                         field_name: #field_name,
                         min: #min,
@@ -158,7 +158,7 @@ impl<T: ToTokens> ToTokens for Parameter<T> {
                 value,
             } => {
                 tokens.extend(quote! {
-                    rustic_meta::Parameter::Float {
+                    treble_meta::Parameter::Float {
                         title: #title,
                         field_name: #field_name,
                         default: #default,
@@ -183,7 +183,7 @@ impl<T: ToTokens> ToTokens for Parameter<T> {
                     None => quote! { None },
                 };
                 tokens.extend(quote! {
-                    rustic_meta::Parameter::Int {
+                    treble_meta::Parameter::Int {
                         title: #title,
                         field_name: #field_name,
                         default: #default,
@@ -200,7 +200,7 @@ impl<T: ToTokens> ToTokens for Parameter<T> {
                 ltype,
             } => {
                 tokens.extend(quote! {
-                    rustic_meta::Parameter::List {
+                    treble_meta::Parameter::List {
                         title: #title,
                         field_name: #field_name,
                         size: #size,

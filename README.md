@@ -1,2 +1,2 @@
-# Rustic Meta
-Metadata structures for rustic. Used by the Rustic derive macros to provide metadata for filters.
+# Treble Meta
+Metadata structures for treble. Used by the Treble derive macros to provide metadata for filters.
