@@ -53,8 +53,15 @@ pub struct MetaSink {
 /// Trait for filters that support named parameter modification and metadata.
 /// Implemented automatically by the `FilterMetaData` derive macro.
 pub trait MetaFilter {
-    /// Sets a parameter by name. The default implementation is a no-op.
-    fn set_parameter(&mut self, _name: &str, _value: f32) {}
+    /// Returns whether the filter accepts a scalar parameter with this name.
+    fn supports_parameter(&self, _name: &str) -> bool {
+        false
+    }
+
+    /// Sets a parameter by name, returning `false` when the name is unsupported.
+    fn set_parameter(&mut self, _name: &str, _value: f32) -> bool {
+        false
+    }
 
     /// Returns the static metadata for this filter type.
     fn metadata() -> FilterInfo
