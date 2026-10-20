@@ -1,6 +1,7 @@
 [package]
 name = "treble-meta"
 description = "Metadata structures for Treble"
+repository = "https://github.com/MinIndustry/treble-meta"
 version = "0.2.0"
 edition = "2024"
 
