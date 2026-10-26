@@ -133,14 +133,3 @@ JSON editor payload. Serde uses snake_case fields and tagged enums:
 Enum parameter values use the same representation with `"kind":"enum"` and a
 stable string in `value`. Signal types use `{"kind":"audio","channels":2}`;
 modulation modes/mappings and simple policy enums serialize as snake_case strings.
-
-## Migration and release order
-
-`FilterInfo`, `FilterInput`, `Parameter`, `Literal`, `ListSize`, `MixMode`,
-`MetaFilter`, `MetaGenerator` and `MetaSink` retain their 0.2 API, serialization and
-token generation. There is no lossy automatic legacy conversion: authors must
-choose stable IDs, port semantics and typed enum variants explicitly.
-
-Publish `treble-meta` 0.3.0 first. Update and publish `treble-derive` next, then
-update `treble-core` to consume generated descriptors and implement the advertised
-runtime semantics. A schema declaration alone does not enable new DSP behaviour.
