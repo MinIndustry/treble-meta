@@ -1,3 +1,14 @@
+//! Treble module metadata and portable instrument document contracts.
+//!
+//! The owned module/document API is independent of DSP execution. Legacy filter
+//! metadata remains available while derive and runtime crates migrate.
+mod document;
+mod module;
+mod validation;
+pub use document::*;
+pub use module::*;
+pub use validation::{ValidationError, ValidationErrors};
+
 mod filter;
 mod parameters;
 

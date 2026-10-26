@@ -1,0 +1,15 @@
+{
+  "format_version": 1,
+  "instrument": {
+    "name": "First tone",
+    "description": "Illustrative contract fixture; not an installed DSP module.",
+    "patch": {
+      "modules": [{"id": "osc-1", "type_id": "example.oscillator", "type_version": 1,
+        "parameters": {"frequency": {"kind": "float", "value": 440.0}, "waveform": {"kind": "enum", "value": "sine"}}}],
+      "cables": []
+    },
+    "interface": {"note_input": null, "audio_outputs": [{"module": "osc-1", "port": "out"}], "controls": [{"id": "pitch", "name": "Pitch", "target": {"module": "osc-1", "parameter": "frequency"}}]},
+    "voice": {"kind": "continuous"}
+  },
+  "editor": {"rack": [{"module": "osc-1", "row": 0, "column": 0}], "cable_slack": 0.6}
+}
