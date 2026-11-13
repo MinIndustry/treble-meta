@@ -92,10 +92,11 @@ pub enum Scale {
     Logarithmic,
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 #[cfg_attr(feature = "ts", derive(ts_rs::TS))]
 pub enum ParameterAccess {
+    #[default]
     User,
     Engine,
 }
