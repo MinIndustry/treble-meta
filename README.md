@@ -1,7 +1,7 @@
 # Treble Meta
 
 Portable module descriptions and instrument documents for Treble. Version 0.3.0
-introduces owned, versioned contracts for a rack editor while preserving the
+introduced owned, versioned contracts for a rack editor while preserving the
 legacy filter API for the staged derive/runtime migration.
 
 This crate contains data, serde/TypeScript representations and validation. It does
@@ -120,6 +120,15 @@ compilation concerns. Keep the last valid running graph when a new document fail
 The application owns dialogs, paths, atomic writes, dirty tracking and automatic
 application policy. The runtime owns preparation, graph installation, live updates
 and state transitions. Neither is implemented by metadata.
+
+## Legacy filter metadata
+
+`FilterInfo`/`FilterInput` describe the filters still registered through the
+legacy `FilterMetaData` derive. Since 0.4.0 each input also carries
+`access` (`user` or `engine`) and an optional `scale` (`linear` or
+`logarithmic`), with the same meaning as on `ParameterDescriptor` and
+`NumericDomain`. Engine-owned inputs keep their port index and remain settable
+by the host; `FilterInfo::user_params()` skips them for editors and models.
 
 ## TypeScript
 

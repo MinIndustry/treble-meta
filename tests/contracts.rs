@@ -382,3 +382,92 @@ fn summing_parameter_inputs_require_one_shared_modulation_mode() {
             .contains("must use the same mode")
     );
 }
+
+fn legacy_filter() -> FilterInfo {
+    FilterInfo {
+        name: "Tremolo",
+        type_id: "Tremolo",
+        description: "fixture",
+        inputs: vec![
+            FilterInput {
+                label: None,
+                parameter: None,
+                access: ParameterAccess::User,
+                scale: None,
+            },
+            FilterInput {
+                label: Some("Frequency"),
+                parameter: Some(Parameter::Range {
+                    title: "Frequency",
+                    field_name: "frequency",
+                    min: 0.01,
+                    max: 20.0,
+                    default: 1.0,
+                    value: 1.0,
+                }),
+                access: ParameterAccess::User,
+                scale: Some(Scale::Logarithmic),
+            },
+            FilterInput {
+                label: Some("Sample Rate"),
+                parameter: Some(Parameter::Range {
+                    title: "Sample Rate",
+                    field_name: "sample_rate",
+                    min: 1.0,
+                    max: 192000.0,
+                    default: 44100.0,
+                    value: 44100.0,
+                }),
+                access: ParameterAccess::Engine,
+                scale: None,
+            },
+        ],
+        outputs: 1,
+    }
+}
+
+#[test]
+fn legacy_filter_access_and_scale_serialize() {
+    let json = serde_json::to_value(legacy_filter()).unwrap();
+    let inputs = json["inputs"].as_array().unwrap();
+    assert_eq!(inputs[1]["access"], "user");
+    assert_eq!(inputs[1]["scale"], "logarithmic");
+    assert_eq!(inputs[2]["access"], "engine");
+    assert!(inputs[2]["scale"].is_null());
+}
+
+#[test]
+fn legacy_filter_round_trips() {
+    let json: &'static str = Box::leak(
+        serde_json::to_string(&legacy_filter())
+            .unwrap()
+            .into_boxed_str(),
+    );
+    let back: FilterInfo = serde_json::from_str(json).unwrap();
+    assert_eq!(back.inputs[1].scale, Some(Scale::Logarithmic));
+    assert_eq!(back.inputs[2].access, ParameterAccess::Engine);
+}
+
+#[test]
+fn legacy_filter_0_3_json_defaults_to_user_without_scale() {
+    let json = r#"{"label":"Factor","parameter":{"Float":{"title":"Factor",
+        "field_name":"factor","default":1.0,"value":1.0}}}"#;
+    let input: FilterInput = serde_json::from_str(json).unwrap();
+    assert_eq!(input.access, ParameterAccess::User);
+    assert_eq!(input.scale, None);
+}
+
+#[test]
+fn legacy_filter_user_params_skip_engine_owned() {
+    let filter = legacy_filter();
+    let names: Vec<_> = filter
+        .user_params()
+        .map(|i| match i.parameter.as_ref().unwrap() {
+            Parameter::Range { field_name, .. } => *field_name,
+            _ => unreachable!(),
+        })
+        .collect();
+    assert_eq!(names, ["frequency"]);
+    assert_eq!(filter.param_port_count(), 2);
+    assert_eq!(filter.audio_port_count(), 1);
+}
